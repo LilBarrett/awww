@@ -1,0 +1,42 @@
+# Essential Jekyll settings
+title: Programming Languages
+author: LilBarrett
+
+# Process files in tiobe directory
+include:
+  - tiobe
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: "tiobe"
+    values:
+      layout: "default"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Custom collection for TIOBE subpages (not shown in main listings)
+collections:
+  tiobe_pages:
+    output: true
+    permalink: /tiobe/:name
+
+# Process tiobe directory but exclude from listings
+include:
+  - tiobe
+
+# Default values for files in tiobe directory
+defaults:
+  - scope:
+      path: "tiobe"
+    values:
+      layout: default
+      published: false
+      sitemap: false

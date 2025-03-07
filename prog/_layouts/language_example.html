@@ -1,0 +1,53 @@
+---
+layout: default
+---
+<div class="language-page">
+  <h1>{{ page.title }}</h1>
+  <p><strong>TIOBE Index Rank:</strong> {{ page.rank }}</p>
+  
+  <h2>Fibonacci Sequence Example</h2>
+  <div class="code-example">
+    {{ content }}
+  </div>
+  
+  <p class="description">This code implements the Fibonacci sequence where each number is the sum of the two preceding ones, starting from 0 and 1.</p>
+  
+  <p><a href="/2025/03/07/tiobe-index/">Back to TIOBE Index</a></p>
+</div>
+
+<style>
+  .language-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: system-ui, sans-serif;
+  }
+  
+  /* Important: Code block styling */
+  .code-example {
+    background: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    margin: 20px 0;
+    overflow: auto;
+  }
+  
+  /* Fix code highlighting */
+  .highlight {
+    margin: 0;
+    padding: 16px;
+    overflow: auto;
+  }
+  
+  pre, code {
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 85%;
+    line-height: 1.45;
+  }
+  
+  pre {
+    margin: 0;
+    white-space: pre;
+    word-break: normal;
+  }
+</style>
