@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>My Routes</h1>
+  <a href="{% url 'route_create' %}">Create new route</a>
+  <ul>
+    {% for route in routes %}
+      <li>
+        <a href="{% url 'route_detail' route.pk %}">{{ route.name }}</a>
+        [<a href="{% url 'route_edit' route.pk %}">edit</a>]
+      </li>
+    {% empty %}
+      <li>No routes yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

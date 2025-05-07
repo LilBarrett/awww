@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ route.name }}</h1>
+  <p>Background: {{ route.background.name }}</p>
+  <img src="{{ route.background.image.url }}" style="max-width:400px;">
+  <h3>Points:</h3>
+  <ul>
+    {% for point in route.points.all|dictsort:"order" %}
+      <li>{{ point.order }}: ({{ point.x }}, {{ point.y }})</li>
+    {% empty %}
+      <li>No points for this route.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

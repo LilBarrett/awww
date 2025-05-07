@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Edit Route: {{ route.name }}</h1>
+  <p>Background: {{ route.background.name }}</p>
+  <style>
+    .route-bg-container { position: relative; display: inline-block; }
+    .route-bg-img { display: block; }
+    .point-dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: red;
+      border-radius: 50%;
+      border: 2px solid white;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 2;
+    }
+  </style>
+
+  <div class="route-bg-container" id="bg-container">
+    <img
+      src="{{ route.background.image.url }}"
+      id="route-bg-img"
+      class="route-bg-img"
+      alt="Background"
+    >
+    {% for point in points %}
+      <div class="point-dot"
+           style="left: {{ point.x }}px; top: {{ point.y }}px;"
+           title="({{ point.x }}, {{ point.y }})"></div>
+    {% endfor %}
+  </div>
+
+  <!-- Hidden form for click-to-add -->
+  <form method="post" id="add-point-form" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="x" id="form-x">
+    <input type="hidden" name="y" id="form-y">
+    <input type="hidden" name="order" id="form-order">
+  </form>
+
+  <h3>Add Point (manual)</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Point</button>
+  </form>
+
+  <h3>Points:</h3>
+  <ul>
+    {% for point in points %}
+      <li>
+        {{ point.order }}: ({{ point.x }}, {{ point.y }})
+        <form method="post" action="{% url 'point_delete' route.pk point.pk %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+  <p><a href="{% url 'route_detail' route.pk %}">View Route</a></p>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const img = document.getElementById('route-bg-img');
+    const form = document.getElementById('add-point-form');
+    const formX = document.getElementById('form-x');
+    const formY = document.getElementById('form-y');
+    const formOrder = document.getElementById('form-order');
+    const existingPoints = {{ points|length }};
+
+    img.addEventListener('click', function(e) {
+      const rect = img.getBoundingClientRect();
+      // If the image is displayed at natural size, this is all you need:
+      const x = Math.round(e.clientX - rect.left);
+      const y = Math.round(e.clientY - rect.top);
+
+      formX.value = x;
+      formY.value = y;
+      formOrder.value = existingPoints + 1;
+      form.submit();
+    });
+  });
+  </script>
+{% endblock %}
